@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            top: 200px;
+        }
+    </style>
+    <script>
+        // 使div可以根据不同的方向键向不同的方向移动
+        /*
+            按左键，div向左移
+            按右键，div向右移
+            ...
+        */
+
+        window.onload = function (event) {
+            // 兼容问题
+            event = event || window.event;
+
+            // 获取box1
+            // var box1 = document.getElementById("box1");
+            // var top = box1.offsetTop;
+            // var left = box1.offsetLeft;
+
+            // 给document绑定键盘事件
+            document.onkeydown = function (event) {
+
+                // 定义一个变量，来表示移动的速度
+                var speed = 10;
+
+                // 当用户按了ctrl以后速度加快
+                if(event.ctrlKey){
+                    speed = 50;
+                }
+                switch (event.key) {
+                    case "ArrowUp":
+                        // alert("向上");left值减少
+                        box1.style.top = box1.offsetTop - speed + "px";
+                        break;
+                    case "ArrowDown":
+                        // alert("向下");
+                        box1.style.top = box1.offsetTop + speed + "px";
+                        break;
+                    case "ArrowLeft":
+                        // alert("向左");
+                        box1.style.left = box1.offsetLeft - speed + "px";
+                        break;
+                    case "ArrowRight":
+                        // alert("向右");
+                        box1.style.left = box1.offsetLeft + speed + "px";
+                        break;
+                }
+            };
+        };
+    </script>
+</head>
+
+<body>
+    <div id="box1"></div>
+</body>
+
+</html>

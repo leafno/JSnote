@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全选练习</title>
+    <script>
+        window.onload = function(){
+            // 获取四个多选框items
+            var items = document.getElementsByName("items");
+            var cabox = document.getElementById("checkedAllBox");
+
+            // 1.#checkedAllBtn
+            /*
+                点击按钮
+                    - 点击按钮以后，四个多选框全都选中
+            */
+            // 为checkedAllBtn的按钮绑定一个单击响应函数
+            var cab = document.getElementById("checkedAllBtn");
+            cab.onclick = function(){
+                
+                // 设置四个多选框变成选中状态
+                for(var i = 0;i < items.length;i++){
+                    // 通过多选框的checked属性可以用来获取或设置多选框中的选中状态
+                    items[i].checked = true;
+                }
+
+                 // 将全选/全不选设置为选中
+                cabox.checked = true;
+
+            };
+
+            
+            
+
+            // 2.#checkedNoBtn
+            /*
+                点击按钮以后，四个多选框都变成没选中的状态
+            */
+            // 为checkedNoBtn的按钮绑定一个单击响应函数
+            var cnb = document.getElementById("checkedNoBtn");
+            cnb.onclick = function(){
+            
+                // 设置四个多选框变成选中状态
+                for(var i = 0;i < items.length;i++){
+                    // 通过多选框的checked属性可以用来获取或设置多选框中的选中状态
+                    items[i].checked = false;
+                }
+
+                // 将全选/全不选设置为选中
+                cabox.checked = false;
+
+            };
+
+
+            // 3.#checkRevBtn
+            /*
+                点击按钮以后，选中的变成没选中，没选中的变成选中
+            */
+            // 为checkedRevBtn的按钮绑定一个单击响应函数
+            var crb = document.getElementById("checkedRevBtn");
+            crb.onclick = function(){
+                
+                // 设置四个多选框变成选中状态
+                var flag = true;
+                for(var i = 0;i < items.length;i++){
+                    // 通过多选框的checked属性可以用来获取或设置多选框中的选中状态
+
+                    // 1.判断状态
+                    // if(items[i].checked == false){
+                    //     items[i].checked = true;
+                    // }else{
+                    //     items[i].checked = false;
+                    // }
+
+                    // 2.直接取反
+                    items[i].checked = !items[i].checked;
+
+                    // 判断四个多选框是否全选
+                    // 只要一个没选中就不是全选
+                    if (items[i].checked == false) {
+                        // 一旦进入判断就证明不是全选
+                        // 将cabox设置为没选中状态
+                        flag = false;
+                    }
+                }
+                // 在反选时也需要判断四个多选框是否全都选中
+                cabox.checked = flag;
+
+            };
+
+
+            // 4.#sendBtn
+            /*
+                点击按钮以后，将所有选中的多选框的value值弹出
+            */
+            // 为sendBtn的按钮绑定一个单击响应函数
+            var sb = document.getElementById("sendBtn");
+            sb.onclick = function(){
+                
+                // 设置四个多选框变成选中状态
+                for(var i = 0;i < items.length;i++){
+                    // 通过多选框的checked属性可以用来获取或设置多选框中的选中状态
+                    if(items[i].checked){
+                        alert(items[i].value);
+                    }
+                }
+
+            };
+
+            // 5.#checkedAllBox
+            /*
+                全选/全不选 多选框
+                    - 当它选中时，其余的也选中，当它取消时，其余的也取消
+
+                在事件的响应函数中，响应函数是给谁绑定的this就是谁
+            */
+            
+            cabox.onclick = function(){
+                // alert(this);
+                for(var i = 0;i < items.length;i++){
+                    items[i].checked = this.checked;
+                }
+            };
+            // 6.items
+            /*
+                如果四个多选框全都选中，则checkedAllBox也应该选中
+                如果四个多选框没都选中，则checkedAllBox也不应该选中
+            */
+            // 为四个多选框分别绑定点击响应函数
+            for (var i = 0; i < items.length; i++) {
+                items[i].onclick = function(){
+                    
+                    var flag = true;
+
+                    for(var j = 0;j < items.length;j++){
+                        // 判断四个多选框是否全选
+                        // 只要一个没选中就不是全选
+                        if(items[j].checked == false){
+                            // 一旦进入判断就证明不是全选
+                            // 将cabox设置为没选中状态
+                            flag = false;
+                            break;
+                        }
+                    }
+                    
+                    cabox.checked = flag;
+                    
+                };
+            }
+            
+                
+        }
+    </script>
+</head>
+<body>
+    <form method="post" action="">
+        你爱好的运动是?<input type="checkbox" id="checkedAllBox">全选/全不选
+        <br>
+        <input type="checkbox" name="items" value="足球">足球
+        <input type="checkbox" name="items" value="篮球">篮球
+        <input type="checkbox" name="items" value="羽毛球">羽毛球
+        <input type="checkbox" name="items" value="乒乓球">乒乓球
+        <br>
+        <input type="button" id="checkedAllBtn" value="全 选">
+        <input type="button" id="checkedNoBtn" value="全不选">
+        <input type="button" id="checkedRevBtn" value="反选">
+        <input type="button" id="sendBtn" value="提交">
+    </form>
+</body>
+</html>
